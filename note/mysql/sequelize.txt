@@ -1,0 +1,16 @@
+模型定义字段支持的属性配置:
+    type: 类型校验
+    allowNull: 是否允许为Null,默认为false
+    defatValue: 默认值
+    primaryKey: 是否是主键
+    autoIncrement: 是否自增
+    comment: 当前列的注释
+    get: Function 设置当前列如何返回
+    set: Function
+    validate: 校验器
+
+注意事项:
+
+    1.执行插入操作时，只会根据模型(model)中定义的字段进行插入，未定义的字段将会忽略
+
+    2.执行插入操作返回新增行对象，这是一个包装对象，直接对其增加属性无效，需要调用同JSON方法获取原始对象在操作

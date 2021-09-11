@@ -1,0 +1,19 @@
+pm2官网:
+    https://pm2.keymetrics.io/docs/advanced/pm2-module-system/
+
+    常用命令:
+        启动指定的环境：
+            pm2 start app.js --env development    
+        生成配置文件:
+            pm2 ecosystem
+
+
+koa github学习笔记:
+    https://github.com/chenshenhai/koa2-note
+
+joi校验API
+    https://github.com/hapijs/joi/blob/v13.6.0/API.md
+
+sequelize官网:
+    https://sequelize.org/v5/manual/models-definition.html
+    内置校验器,

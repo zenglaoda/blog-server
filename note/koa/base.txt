@@ -1,0 +1,165 @@
+/*
+	详情:https://koa.bootcss.com/
+
+*/
+
+const ctx= {
+	"request": {
+		"method": "GET",
+		"url": "/favicon.ico",
+		"header": {
+			"host": "localhost:3000",
+			"connection": "keep-alive",
+			"pragma": "no-cache",
+			"cache-control": "no-cache",
+			"user-agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36",
+			"accept": "image/webp,image/apng,image/*,*/*;q=0.8",
+			"referer": "http://localhost:3000/",
+			"accept-encoding": "gzip, deflate, br",
+			"accept-language": "zh-CN,zh;q=0.9",
+			"cookie": "_ga=GA1.1.2103206272.1540094284"
+		}
+	},
+	"response": {
+		"status": 200,
+		"message": "OK",
+		"header": {
+			"content-type": "text/plain; charset=utf-8",
+			"content-length": "11",
+			"x-response-time": "0ms"
+		}
+	},
+	"app": {
+		"subdomainOffset": 2,
+		"proxy": false,
+		"env": "development"
+	},
+	"originalUrl": "/favicon.ico",
+	"req": "<original node req>",
+	"res": "<original node res>",
+	"socket": "<original node socket>"
+}
+
+注:以下app都是Koa类的实例
+一.计算响应时间:
+	const app = new Koa();
+
+	app.use(async (ctx, next) => {
+		await next();
+		const rt = ctx.response.get('X-Response-Time');
+		const body = ctx.response.get('body');
+		const A = ctx.response.get('A');
+	});
+	
+	// x-response-time
+	
+	app.use(async (ctx, next) => {
+		const start = Date.now();
+		await next();
+		const ms = Date.now() - start;
+		ctx.set('X-Response-Time', `${ms}ms`);
+	});
+	
+	// response
+	
+	app.use(async ctx => {
+		ctx.body = 'Hello World';
+	});
+	
+	app.listen(3000);
+
+二.ctx,app相互之间的联系
+	1)ctx.app === app;
+		创建的Koa实例作为ctx的属性
+
+	2)所有的ctx都是同一个实例
+
+三.为app添加属性
+	1)app对象上默认有env,subdomainOffset,proxy这三个属性。当为其设置其他属性时，其他属性的表现行为类似劫持。
+
+	app.env = 'production';
+	app.age = '13';
+	
+	console.log(app);       //{ subdomainOffset: 2, proxy: false, env: 'production' },无age属性
+	console.log(app.age);   //app上找不到age属性，但是却能取到刚才设置的值。          
+	
+四.ctx.cookies
+	1)ctx.cookies.set('name', 'tobi', { signed: true });  //签名可配置app.keys属性使用
+		ctx.cookies.get
+	2)ctx.set:
+		用于设置响应头
+	
+	3)ctx.body:
+		发送给客户端的数据存在body中。
+		注:所有的中间件都可以给body属性添加值，用于返回给客户端的最终数据以最后一个执行完的中间中body对象的值为准。
+	4)ctx.respond = false
+		为了绕过 Koa 的内置 response 处理，你可以显式设置 ctx.respond = false;。 如果您想要写入原始的 res 
+		对象而不是让 Koa 处理你的 response，请使用此参数
+	
+
+五.为ctx设置全局通用方法或属性
+	1)app.context
+		ctx的原型是app.context,当为app.context添加了属性或方法时ctx就会继承这些属性
+	
+	2)app.env
+		当前的node环境,默认是development
+	
+	3)app.silent
+		表示是否将错误输出到stderr(标准输出，即屏幕),默认为false
+
+	4)app.middleware
+		表述当前app已经注册的中间件
+六.app事件
+	1)捕获中间件执行过程中发生的错误，当代码执行过程中出现错误时，服务器最终会返回status:500,告知浏览器
+	服务端出现错误。只有在代码出现错误的时候才会执行下面的回调函数。当服务器报404等非代码错误时不会执行下面的
+	回调函数。当将
+		app.on('error',function(err,ctx){
+			err.expose = true;
+			console.log('1');
+			console.log(err);
+			console.log('2');    
+			console.log(ctx);
+		})
+
+七.错误捕捉
+	app.on('error',function(err,ctx){
+		err.expose = true;
+		err.status = 300;
+		console.log('1');
+		console.log(err);
+		console.log('2');    
+		console.log(ctx);
+	});
+	1)err实例:
+		err实例的status设置响应的状态值，expose属性设置是否将错误信息返回给客户端，默认false,不将服务器
+		的故障信息告知客户端，开发时应告知。 当 err.status 是 404 或 err.expose 是 true 时默认错误处
+		理程序也不会输出错误。
+
+	ctx.throw(状态值,错误信息);
+	相当于
+	const err = new Error('name required');
+	err.status = 400;
+	err.expose = true;
+	throw err;
+
+八.Error实例
+	1)err.status
+
+	2)err.expose
+		当expose设为true时，Koa将会把err实例的status与message属性的值作为返回值发送给客户端。
+		
+	3)err.message
+		错误信息
+
+九.常用中间件
+	1)koa-compress:网页压缩，一般用于对html等文本的压缩
+
+	2)koa-static
+
+	3)koa-router
+
+	4)koa-body
+
+	5)debug?开启调试
+
+	6)log?记录错误日子

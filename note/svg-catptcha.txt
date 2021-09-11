@@ -1,0 +1,2 @@
+生成svg验证码:
+    https://github.com/produck/svg-captcha/blob/HEAD/README_CN.md
