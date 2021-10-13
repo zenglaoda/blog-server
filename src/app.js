@@ -48,10 +48,13 @@ app
 
     // 页面不存在信息提示
     .use(async function notFound(ctx){
-        const indexPage = path.resolve(__dirname, 'public/index.html');
+        // const indexPage = path.resolve(__dirname, 'public/index.html');
+        // ctx.status = 200;
+        // ctx.set('Content-Type', 'text/html');
+        // ctx.body = fs.readFileSync(indexPage);
         ctx.status = 200;
         ctx.set('Content-Type', 'text/html');
-        ctx.body = fs.readFileSync(indexPage);
+        ctx.body = 'page not fund';
     })
 
     // 捕捉中间件错误,将错误返回给客户端

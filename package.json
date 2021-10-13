@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "demo": "node  --inspect-brk ./src/1.js",
-    "bug": "set NODE_ENV=development&&node ./src/app.js",
+    "start": "cross-env NODE_ENV=development node ./src/app.js",
     "dev": "pm2 start ecosystem.config.js --env development",
     "prod": "pm2 start ecosystem.config.js --env production",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,5 +23,7 @@
     "mysql2": "^2.1.0",
     "sequelize": "^5.21.5"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
 }

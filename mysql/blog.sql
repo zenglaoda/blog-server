@@ -19,8 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `blog`
 --
-CREATE DATABASE IF NOT EXISTS `blog` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `blog`;
+CREATE DATABASE IF NOT EXISTS `blog-dev` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `blog-dev`;
 
 -- --------------------------------------------------------
 

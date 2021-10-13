@@ -3,7 +3,7 @@ module.exports = {
         database: 'blog-dev',
         host: '127.0.0.1',
         username: 'root',
-        password: '814595325',
+        password: 'root',
         port: 3306,
     },
     key: '814595325',
