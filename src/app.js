@@ -48,13 +48,10 @@ app
 
     // 页面不存在信息提示
     .use(async function notFound(ctx){
-        // const indexPage = path.resolve(__dirname, 'public/index.html');
-        // ctx.status = 200;
-        // ctx.set('Content-Type', 'text/html');
-        // ctx.body = fs.readFileSync(indexPage);
+        const indexPage = path.resolve(__dirname, 'public/index.html');
         ctx.status = 200;
         ctx.set('Content-Type', 'text/html');
-        ctx.body = 'page not fund';
+        ctx.body = fs.readFileSync(indexPage);
     })
 
     // 捕捉中间件错误,将错误返回给客户端
@@ -64,5 +61,6 @@ app
 
     // 设置启动端口
     .listen(3000, 'localhost', function callback() {
-        console.log('success');
+        console.log('启动成功:');
+        console.log(`   NODE_ENV:${process.env.NODE_ENV}`);
     });
