@@ -2,7 +2,6 @@ const Sequelize = require('sequelize');
 const Service = require('../../lib/service');
 const validate = require('../../lib/validate');
 const { ids2List } = require('../../lib/utils');
-const { filterUndef } = require('../../lib/utils');
 const tagService = require('../tag');
 const { UniqueConstraintError } = Sequelize;
 
@@ -132,7 +131,7 @@ class LinkService extends Service {
      * @returns 
      */
     update(body = {}) {
-        const data = filterUndef({
+        const data = ({
             tagId: body.tagId,
             title: body.title,
             url: body.url,

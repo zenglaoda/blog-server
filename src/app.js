@@ -61,6 +61,7 @@ app
 
     // 设置启动端口
     .listen(3000, 'localhost', function callback() {
-        console.log('启动成功:');
+        console.log('启动信息:');
         console.log(`   NODE_ENV:${process.env.NODE_ENV}`);
+        console.log(`   访问地址:localhost: 3000`);
     });

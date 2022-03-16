@@ -63,7 +63,7 @@ class ArticleService extends Service {
         return this.model.findAndCountAll({
             offset: (page - 1) * pageSize,
             limit: pageSize,
-            attributes: ['id', 'title', 'description','createdAt', 'updatedAt'],
+            attributes: ['id', 'title', 'description', 'tagId', 'createdAt', 'updatedAt'],
             order: [
                 ['updatedAt', 'DESC']
             ],
@@ -108,8 +108,7 @@ class ArticleService extends Service {
      * @param {string} body.status
      * @returns {Promise<object>}
      */
-    create(body = {}) {
-        body.createdAt = 1111111111111;
+    async create(body = {}) {
         return this.model.create(body)
             .then((record) => {
                 return record;

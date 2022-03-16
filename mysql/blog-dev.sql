@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2021-09-11 05:34:23
+-- Generation Time: 2022-03-13 04:02:49
 -- 服务器版本： 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `blog`
 --
-CREATE DATABASE IF NOT EXISTS `blog-dev` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `blog-dev`;
 
 -- --------------------------------------------------------
 
@@ -28,7 +26,6 @@ USE `blog-dev`;
 -- 表的结构 `article`
 --
 
-DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
   `id` int(11) NOT NULL COMMENT '文章id',
   `title` varchar(60) NOT NULL COMMENT '文章标题',
@@ -68,7 +65,6 @@ INSERT INTO `article` (`id`, `title`, `tagId`, `description`, `content`, `status
 -- 表的结构 `link`
 --
 
-DROP TABLE IF EXISTS `link`;
 CREATE TABLE `link` (
   `id` int(11) NOT NULL COMMENT '链接id',
   `title` varchar(60) NOT NULL COMMENT '分享的标题',
@@ -97,7 +93,6 @@ INSERT INTO `link` (`id`, `title`, `tagId`, `description`, `url`, `keyword`, `cr
 -- 表的结构 `tag`
 --
 
-DROP TABLE IF EXISTS `tag`;
 CREATE TABLE `tag` (
   `id` int(11) NOT NULL COMMENT '标签id',
   `pid` int(11) NOT NULL COMMENT '父级标签id',
