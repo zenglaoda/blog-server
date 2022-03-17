@@ -2,7 +2,8 @@ const Service = require('../../lib/service');
 const validate = require('../../lib/validate');
 const linkModel = require('../../model/link');
 const articleModel = require('../../model/article');
-const Op = require('sequelize').Op;
+const sequelize = require('sequelize');
+const Op = sequelize.Op;
 
 class TagService extends Service {
     constructor() {
@@ -10,8 +11,7 @@ class TagService extends Service {
         this.model = this.models.tag;
     }
     
-    // TODO:查询出每个标签含有的文章，链接数
-    getList(query = {}) {
+    getList() {
         return this.model.findAll();
     }
 
@@ -108,6 +108,7 @@ class TagService extends Service {
             const count = await conditions[i]()
             if (count) {
                 this.message.param('该标签正在使用中!');
+                return;
             }
         }
 
@@ -119,7 +120,6 @@ class TagService extends Service {
             .then(() => true)
     }
 
-    // TODO: 错误校验已去除
     /**
      * @description 从tagIds列表里面找出二级tagId对应的实体
      * @param {object} tagIds: 标签id
@@ -179,6 +179,28 @@ class TagService extends Service {
         }
         const tagIdSet = new Set(childTags.map(ele => ele.id).concat(childIds));
         return [...tagIdSet];  
+    }
+
+    /**
+     * @description 获取标签关联的文章数与链接数
+     */
+    async getAssociations() {
+        const options = { type: sequelize.QueryTypes.SELECT };
+        const linkSQL =    `SELECT tagId, COUNT(tagId) AS count FROM link GROUP BY tagId`;
+        const articleSQL = `SELECT tagId, COUNT(tagId) AS count FROM article GROUP BY tagId`;
+        const linkRes = await this.query(linkSQL, options);
+        const articleRes = await this.query(articleSQL, options);
+        const toMap = (list) => {
+            if (!Array.isArray(list)) return {};
+            return list.reduce((map, next) => {
+                map[next.tagId] = next.count;
+                return map;
+            }, {});
+        }
+        return {
+            link: toMap(linkRes),
+            article: toMap(articleRes),
+        };
     }
 }
 

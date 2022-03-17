@@ -20,19 +20,6 @@ class ArticleController extends Controller{
             });
     }
 
-    getDraftList(ctx) {
-        return this.service.getDraftList()
-            .then((data) => {
-                return this.message.success(data);
-            })
-            .catch((err) => {
-                return this.message.fail(err, '获取列表失败!');
-            })
-            .then((body) => {
-                ctx.body = body;
-            });
-    }
-
     getItem(ctx) {
         return this.service.getItem(ctx.request.query)
             .then((data) => {
@@ -45,7 +32,6 @@ class ArticleController extends Controller{
                 ctx.body = body;
             });
     }
-
 
     create(ctx) {
         return this.service.create(ctx.request.body)

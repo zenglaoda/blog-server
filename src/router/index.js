@@ -13,12 +13,11 @@ router.post('/link/create', ctx => link.create(ctx));
 router.post('/link/update', ctx => link.update(ctx));
 router.post('/link/destroy', ctx => link.destroy(ctx));
 
+router.post('/article/updateStatus', ctx => article.updateStatus(ctx));
 router.get('/article/getList', ctx => article.getList(ctx));
-router.get('/article/getDraftList', ctx => article.getDraftList(ctx));
 router.get('/article/getItem', ctx => article.getItem(ctx));
 router.post('/article/create', ctx => article.create(ctx));
 router.post('/article/update', ctx => article.update(ctx));
-router.post('/article/updateStatus', ctx => article.updateStatus(ctx));
 router.post('/article/destroy', ctx => article.destroy(ctx));
 
 router.get('/tag/getList', ctx => tag.getList(ctx));
@@ -26,5 +25,6 @@ router.get('/tag/getItem', ctx => tag.getItem(ctx));
 router.post('/tag/create', ctx => tag.create(ctx));
 router.post('/tag/update', ctx => tag.update(ctx));
 router.post('/tag/destroy', ctx => tag.destroy(ctx));
+router.get('/tag/getAssociations', ctx => tag.getAssociations(ctx));
 
 module.exports = router;

@@ -10,8 +10,8 @@ class Service {
         this.message = message;
     }
 
-    query(...args) {
-        return sequelize.query(...args);
+    query(sql, options = {}) {
+        return sequelize.query(sql, options);
     }
 }
 

@@ -43,7 +43,6 @@ class TagController extends Controller{
                 ctx.body = this.message.success(res, '修改成功!'); 
             })
             .catch((err) => {
-                console.log(err);
                 ctx.body = this.message.fail(err, '更新标签失败!');
             });
     }
@@ -56,6 +55,17 @@ class TagController extends Controller{
             .catch((err) => {
                 ctx.body = this.message.fail(err, '删除标签失败!');
             });
+    }
+
+    getAssociations(ctx) {
+        return this.service.getAssociations()
+            .then((res) => {
+                ctx.body = this.message.success(res); 
+            })
+            .catch((err) => {
+                ctx.body = this.message.fail(err, '请求错误!');
+            });
+
     }
 }
 module.exports = new TagController();

@@ -4,9 +4,10 @@
   "description": "blog server",
   "private": true,
   "scripts": {
-    "demo": "node  --inspect-brk ./src/1.js",
-    "start": "cross-env NODE_ENV=development node ./src/app.js",
-    "dev": "pm2 start ecosystem.config.js --env development",
+    "debug": "node  --inspect-brk ./src/1.js",
+    "dev": "cross-env NODE_ENV=development node ./src/app.js",
+    "serve": "cross-env NODE_ENV=production node ./src/app.js",
+    "start": "pm2 start ecosystem.config.js --env development",
     "prod": "pm2 start ecosystem.config.js --env production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

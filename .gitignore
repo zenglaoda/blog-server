@@ -25,3 +25,4 @@ pnpm-debug.log*
 # 暂时不做提交
 mock.*
 mock-*.*
+/src/public/*
